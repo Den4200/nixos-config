@@ -16,7 +16,7 @@
         self.nixosModules.ssh-gpg-agent
       ];
 
-      nix = { 
+      nix = {
         gc = {
           automatic = true;
           dates = "weekly";
