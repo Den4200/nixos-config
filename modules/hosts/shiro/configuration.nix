@@ -16,10 +16,21 @@
         self.nixosModules.ssh-gpg-agent
       ];
 
-      nix.settings.experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
+      nix = { 
+        gc = {
+          automatic = true;
+          dates = "weekly";
+          options = "--delete-older-than 30d";
+        };
+        optimise = {
+          automatic = true;
+          dates = "weekly";
+        };
+        settings.experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+      };
 
       # Bootloader.
       boot.loader.systemd-boot.enable = true;
