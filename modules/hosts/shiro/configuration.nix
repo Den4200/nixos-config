@@ -142,7 +142,6 @@
         #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
         #  wget
         cider-2
-        discord-canary
         fastfetch
         gh
         github-copilot-cli
@@ -151,6 +150,8 @@
         nixd
         nixfmt
         nixfmt-tree
+        obsidian
+        vesktop
         vim
         vscode
         zed-editor
