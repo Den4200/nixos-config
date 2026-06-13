@@ -26,24 +26,24 @@
       boot.extraModulePackages = [ ];
 
       fileSystems."/" = {
-        device = "/dev/disk/by-uuid/a6a1dfd0-789d-4b17-8417-dd2d0f1f3585";
+        device = "/dev/disk/by-label/NIXROOT";
         fsType = "btrfs";
       };
 
       fileSystems."/home" = {
-        device = "/dev/disk/by-uuid/a6a1dfd0-789d-4b17-8417-dd2d0f1f3585";
+        device = "/dev/disk/by-label/NIXROOT";
         fsType = "btrfs";
         options = [ "subvol=home" ];
       };
 
       fileSystems."/nix" = {
-        device = "/dev/disk/by-uuid/a6a1dfd0-789d-4b17-8417-dd2d0f1f3585";
+        device = "/dev/disk/by-label/NIXROOT";
         fsType = "btrfs";
         options = [ "subvol=nix" ];
       };
 
       fileSystems."/boot" = {
-        device = "/dev/disk/by-uuid/E3BB-0128";
+        device = "/dev/disk/by-label/NIXBOOT";
         fsType = "vfat";
         options = [
           "fmask=0077"
