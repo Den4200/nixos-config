@@ -22,10 +22,6 @@
           style.name = "adwaita-dark";
         };
 
-        xdg.configFile."dolphinrc".text = lib.generators.toINI { } {
-          UiSettings.ColorScheme = "BreezeDark";
-        };
-
         programs.zsh = {
           enable = true;
           enableCompletion = true;
@@ -112,7 +108,6 @@
 
           # apps
           cider-2
-          kdePackages.dolphin
           obsidian
           vesktop
         ];

@@ -187,6 +187,11 @@
         services.dbus.implementation = "broker";
         services.printing.enable = true;
         programs.firefox.enable = true;
+
+        environment.systemPackages = with pkgs; [
+          # Required for file chooser w/ xdg-desktop-portal-gnome that is installed with niri
+          nautilus
+        ];
       };
 
     provides.to-users.homeManager =
