@@ -3,11 +3,13 @@
   den.aspects.dennis.homeManager =
     { pkgs, lib, ... }:
     let
-      extensions = (import inputs.nixpkgs {
-        system = pkgs.stdenv.hostPlatform.system;
-        config.allowUnfree = true;
-        overlays = [ inputs.nix-vscode-extensions.overlays.default ];
-      });
+      extensions = (
+        import inputs.nixpkgs {
+          system = pkgs.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+          overlays = [ inputs.nix-vscode-extensions.overlays.default ];
+        }
+      );
       marketplace = extensions.vscode-marketplace;
     in
     {
