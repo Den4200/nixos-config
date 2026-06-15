@@ -1,0 +1,365 @@
+{ inputs, ... }:
+let
+  wallpaper = ../../resources/wallpaper.jpeg;
+in
+{
+  # Import the niri NixOS module for system-level integration
+  den.aspects.dennis.provides.to-hosts.nixos =
+    { pkgs, ... }:
+    {
+      imports = [ inputs.niri.nixosModules.niri ];
+      nixpkgs.overlays = [ inputs.niri.overlays.niri ];
+      programs.niri.enable = true;
+      programs.niri.package = pkgs.niri-unstable;
+    };
+
+  # System-level niri settings (hardware/host-specific)
+  den.aspects.shiro.provides.to-users.homeManager =
+    { pkgs, lib, ... }:
+    {
+      programs.niri.settings = {
+        outputs."DP-3" = {
+          mode = {
+            width = 3840;
+            height = 2160;
+            refresh = 59.997;
+          };
+          scale = 1.5;
+          position = {
+            x = 1440;
+            y = 525;
+          };
+          focus-at-startup = true;
+        };
+        outputs."DP-2" = {
+          mode = {
+            width = 2560;
+            height = 1440;
+            refresh = 59.951;
+          };
+          scale = 1.0;
+          transform.rotation = 270;
+          position = {
+            x = 0;
+            y = 0;
+          };
+        };
+
+        spawn-at-startup = [
+          { argv = [ "${lib.getExe pkgs.xwayland-satellite}" ]; }
+        ];
+      };
+    };
+
+  # User-level niri settings (preferences)
+  den.aspects.dennis.homeManager =
+    { pkgs, lib, ... }:
+    {
+      programs.niri.settings = {
+        spawn-at-startup = [
+          { argv = [ "${lib.getExe pkgs.noctalia-shell}" ]; }
+          {
+            argv = [
+              "${lib.getExe pkgs.swaybg}"
+              "-i"
+              "${wallpaper}"
+              "-m"
+              "fill"
+            ];
+          }
+        ];
+
+        input = {
+          keyboard.xkb.layout = "us";
+          mouse.accel-profile = "flat";
+        };
+
+        layout = {
+          gaps = 4;
+          focus-ring.width = 2;
+        };
+
+        # Keybindings
+        binds =
+          let
+            spawn = args: { action.spawn = args; };
+            sh = cmd: {
+              action.spawn = [
+                "sh"
+                "-c"
+                cmd
+              ];
+            };
+          in
+          {
+            # Hotkey overlay
+            "Mod+Shift+Slash".action.show-hotkey-overlay = [ ];
+
+            # Programs
+            "Mod+Return" = spawn "${lib.getExe pkgs.ghostty}" // {
+              hotkey-overlay.title = "Open a Terminal: ghostty";
+            };
+            "Mod+Space" = spawn "walker" // {
+              hotkey-overlay.title = "Run an Application: walker";
+            };
+            "Super+Alt+L" = spawn "${lib.getExe pkgs.swaylock}" // {
+              hotkey-overlay.title = "Lock the Screen: swaylock";
+            };
+            "Super+Alt+S" = sh "pkill orca || exec orca" // {
+              allow-when-locked = true;
+            };
+
+            # Volume
+            "XF86AudioRaiseVolume" = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0" // {
+              allow-when-locked = true;
+            };
+            "XF86AudioLowerVolume" = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-" // {
+              allow-when-locked = true;
+            };
+            "XF86AudioMute" = sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" // {
+              allow-when-locked = true;
+            };
+            "XF86AudioMicMute" = sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle" // {
+              allow-when-locked = true;
+            };
+
+            # Media
+            "XF86AudioPlay" =
+              spawn [
+                "${lib.getExe pkgs.playerctl}"
+                "play-pause"
+              ]
+              // {
+                allow-when-locked = true;
+              };
+            "XF86AudioPause" =
+              spawn [
+                "${lib.getExe pkgs.playerctl}"
+                "play-pause"
+              ]
+              // {
+                allow-when-locked = true;
+              };
+            "XF86AudioStop" =
+              spawn [
+                "${lib.getExe pkgs.playerctl}"
+                "stop"
+              ]
+              // {
+                allow-when-locked = true;
+              };
+            "XF86AudioPrev" =
+              spawn [
+                "${lib.getExe pkgs.playerctl}"
+                "previous"
+              ]
+              // {
+                allow-when-locked = true;
+              };
+            "XF86AudioNext" =
+              spawn [
+                "${lib.getExe pkgs.playerctl}"
+                "next"
+              ]
+              // {
+                allow-when-locked = true;
+              };
+
+            # Brightness
+            "XF86MonBrightnessUp" =
+              spawn [
+                "${lib.getExe pkgs.brightnessctl}"
+                "--class=backlight"
+                "set"
+                "+10%"
+              ]
+              // {
+                allow-when-locked = true;
+              };
+            "XF86MonBrightnessDown" =
+              spawn [
+                "${lib.getExe pkgs.brightnessctl}"
+                "--class=backlight"
+                "set"
+                "10%-"
+              ]
+              // {
+                allow-when-locked = true;
+              };
+
+            # Overview
+            "Mod+X" = {
+              action.toggle-overview = [ ];
+              repeat = false;
+            };
+
+            # Window management
+            "Mod+Q" = {
+              action.close-window = [ ];
+              repeat = false;
+            };
+
+            # Focus
+            "Mod+Left".action.focus-column-left = [ ];
+            "Mod+Down".action.focus-window-down = [ ];
+            "Mod+Up".action.focus-window-up = [ ];
+            "Mod+Right".action.focus-column-right = [ ];
+            "Mod+H".action.focus-column-left = [ ];
+            "Mod+J".action.focus-window-down = [ ];
+            "Mod+K".action.focus-window-up = [ ];
+            "Mod+L".action.focus-column-right = [ ];
+
+            # Move columns/windows
+            "Mod+Ctrl+Left".action.move-column-left = [ ];
+            "Mod+Ctrl+Down".action.move-window-down = [ ];
+            "Mod+Ctrl+Up".action.move-window-up = [ ];
+            "Mod+Ctrl+Right".action.move-column-right = [ ];
+            "Mod+Ctrl+H".action.move-column-left = [ ];
+            "Mod+Ctrl+J".action.move-window-down = [ ];
+            "Mod+Ctrl+K".action.move-window-up = [ ];
+            "Mod+Ctrl+L".action.move-column-right = [ ];
+
+            # First/last column
+            "Mod+Home".action.focus-column-first = [ ];
+            "Mod+End".action.focus-column-last = [ ];
+            "Mod+Ctrl+Home".action.move-column-to-first = [ ];
+            "Mod+Ctrl+End".action.move-column-to-last = [ ];
+
+            # Focus monitor
+            "Mod+Shift+Left".action.focus-monitor-left = [ ];
+            "Mod+Shift+Down".action.focus-monitor-down = [ ];
+            "Mod+Shift+Up".action.focus-monitor-up = [ ];
+            "Mod+Shift+Right".action.focus-monitor-right = [ ];
+            "Mod+Shift+H".action.focus-monitor-left = [ ];
+            "Mod+Shift+J".action.focus-monitor-down = [ ];
+            "Mod+Shift+K".action.focus-monitor-up = [ ];
+            "Mod+Shift+L".action.focus-monitor-right = [ ];
+
+            # Move column to monitor
+            "Mod+Shift+Ctrl+Left".action.move-column-to-monitor-left = [ ];
+            "Mod+Shift+Ctrl+Down".action.move-column-to-monitor-down = [ ];
+            "Mod+Shift+Ctrl+Up".action.move-column-to-monitor-up = [ ];
+            "Mod+Shift+Ctrl+Right".action.move-column-to-monitor-right = [ ];
+            "Mod+Shift+Ctrl+H".action.move-column-to-monitor-left = [ ];
+            "Mod+Shift+Ctrl+J".action.move-column-to-monitor-down = [ ];
+            "Mod+Shift+Ctrl+K".action.move-column-to-monitor-up = [ ];
+            "Mod+Shift+Ctrl+L".action.move-column-to-monitor-right = [ ];
+
+            # Workspace navigation
+            "Mod+Page_Down".action.focus-workspace-down = [ ];
+            "Mod+Page_Up".action.focus-workspace-up = [ ];
+            "Mod+U".action.focus-workspace-down = [ ];
+            "Mod+I".action.focus-workspace-up = [ ];
+            "Mod+Ctrl+Page_Down".action.move-column-to-workspace-down = [ ];
+            "Mod+Ctrl+Page_Up".action.move-column-to-workspace-up = [ ];
+            "Mod+Ctrl+U".action.move-column-to-workspace-down = [ ];
+            "Mod+Ctrl+I".action.move-column-to-workspace-up = [ ];
+
+            # Move workspace
+            "Mod+Shift+Page_Down".action.move-workspace-down = [ ];
+            "Mod+Shift+Page_Up".action.move-workspace-up = [ ];
+            "Mod+Shift+U".action.move-workspace-down = [ ];
+            "Mod+Shift+I".action.move-workspace-up = [ ];
+
+            # Mouse wheel workspace
+            "Mod+WheelScrollDown" = {
+              action.focus-workspace-down = [ ];
+              cooldown-ms = 150;
+            };
+            "Mod+WheelScrollUp" = {
+              action.focus-workspace-up = [ ];
+              cooldown-ms = 150;
+            };
+            "Mod+Ctrl+WheelScrollDown" = {
+              action.move-column-to-workspace-down = [ ];
+              cooldown-ms = 150;
+            };
+            "Mod+Ctrl+WheelScrollUp" = {
+              action.move-column-to-workspace-up = [ ];
+              cooldown-ms = 150;
+            };
+
+            # Mouse wheel column
+            "Mod+WheelScrollRight".action.focus-column-right = [ ];
+            "Mod+WheelScrollLeft".action.focus-column-left = [ ];
+            "Mod+Ctrl+WheelScrollRight".action.move-column-right = [ ];
+            "Mod+Ctrl+WheelScrollLeft".action.move-column-left = [ ];
+            "Mod+Shift+WheelScrollDown".action.focus-column-right = [ ];
+            "Mod+Shift+WheelScrollUp".action.focus-column-left = [ ];
+            "Mod+Ctrl+Shift+WheelScrollDown".action.move-column-right = [ ];
+            "Mod+Ctrl+Shift+WheelScrollUp".action.move-column-left = [ ];
+
+            # Workspaces by index
+            "Mod+1".action.focus-workspace = 1;
+            "Mod+2".action.focus-workspace = 2;
+            "Mod+3".action.focus-workspace = 3;
+            "Mod+4".action.focus-workspace = 4;
+            "Mod+5".action.focus-workspace = 5;
+            "Mod+6".action.focus-workspace = 6;
+            "Mod+7".action.focus-workspace = 7;
+            "Mod+8".action.focus-workspace = 8;
+            "Mod+9".action.focus-workspace = 9;
+            "Mod+Ctrl+1".action.move-column-to-workspace = 1;
+            "Mod+Ctrl+2".action.move-column-to-workspace = 2;
+            "Mod+Ctrl+3".action.move-column-to-workspace = 3;
+            "Mod+Ctrl+4".action.move-column-to-workspace = 4;
+            "Mod+Ctrl+5".action.move-column-to-workspace = 5;
+            "Mod+Ctrl+6".action.move-column-to-workspace = 6;
+            "Mod+Ctrl+7".action.move-column-to-workspace = 7;
+            "Mod+Ctrl+8".action.move-column-to-workspace = 8;
+            "Mod+Ctrl+9".action.move-column-to-workspace = 9;
+
+            # Column consume/expel
+            "Mod+BracketLeft".action.consume-or-expel-window-left = [ ];
+            "Mod+BracketRight".action.consume-or-expel-window-right = [ ];
+            "Mod+Comma".action.consume-window-into-column = [ ];
+            "Mod+Period".action.expel-window-from-column = [ ];
+
+            # Column width presets
+            "Mod+R".action.switch-preset-column-width = [ ];
+            "Mod+Shift+R".action.switch-preset-column-width-back = [ ];
+            "Mod+Ctrl+Shift+R".action.switch-preset-window-height = [ ];
+            "Mod+Ctrl+R".action.reset-window-height = [ ];
+
+            # Maximize/fullscreen
+            "Mod+F".action.maximize-column = [ ];
+            "Mod+Shift+F".action.fullscreen-window = [ ];
+            "Mod+M".action.maximize-window-to-edges = [ ];
+            "Mod+Ctrl+F".action.expand-column-to-available-width = [ ];
+
+            # Center
+            "Mod+C".action.center-column = [ ];
+            "Mod+Ctrl+C".action.center-visible-columns = [ ];
+
+            # Width/height adjustments
+            "Mod+Minus".action.set-column-width = "-10%";
+            "Mod+Equal".action.set-column-width = "+10%";
+            "Mod+Shift+Minus".action.set-window-height = "-10%";
+            "Mod+Shift+Equal".action.set-window-height = "+10%";
+
+            # Floating
+            "Mod+V".action.toggle-window-floating = [ ];
+            "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [ ];
+
+            # Tabbed
+            "Mod+W".action.toggle-column-tabbed-display = [ ];
+
+            # Screenshots
+            "Print".action.screenshot = [ ];
+            "Ctrl+Print".action.screenshot-screen = [ ];
+            "Alt+Print".action.screenshot-window = [ ];
+
+            # Keyboard shortcuts inhibit
+            "Mod+Escape" = {
+              action.toggle-keyboard-shortcuts-inhibit = [ ];
+              allow-inhibiting = false;
+            };
+
+            # Session
+            "Mod+Shift+E".action.quit = [ ];
+            "Ctrl+Alt+Delete".action.quit = [ ];
+            "Mod+Shift+P".action.power-off-monitors = [ ];
+          };
+      };
+    };
+}

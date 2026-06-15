@@ -1,27 +1,21 @@
-{ self, inputs, ... }:
+{ inputs, ... }:
 {
-  flake.nixosModules.noctalia =
-    { pkgs, lib, ... }:
+  # Noctalia shell/bar config for dennis via official HM module
+  den.aspects.dennis.homeManager =
+    { pkgs, ... }:
     {
-      programs.noctalia = {
-        enable = true;
-        package = self.packages.${pkgs.stdenv.hostPlatform.system}.myNoctalia;
-      };
-    };
+      imports = [
+        inputs.noctalia.homeModules.default
+      ];
 
-  perSystem =
-    { pkgs, lib, ... }:
-    {
-      packages.myNoctalia = inputs.wrapper-modules.wrappers.noctalia-shell.wrap {
-        inherit pkgs;
+      programs.noctalia-shell = {
+        enable = true;
         settings = {
           settingsVersion = 59;
           bar = {
             barType = "simple";
             position = "top";
-            monitors = [
-              "DP-3"
-            ];
+            monitors = [ "DP-3" ];
             density = "default";
             showOutline = false;
             showCapsule = true;
@@ -139,17 +133,13 @@
               ];
               right = [
                 {
-                  blacklist = [
-
-                  ];
+                  blacklist = [ ];
                   chevronColor = "none";
                   colorizeIcons = false;
                   drawerEnabled = true;
                   hidePassive = false;
                   id = "Tray";
-                  pinned = [
-
-                  ];
+                  pinned = [ ];
                 }
                 {
                   hideWhenZero = false;
@@ -187,9 +177,7 @@
             rightClickAction = "controlCenter";
             rightClickFollowMouse = true;
             rightClickCommand = "";
-            screenOverrides = [
-
-            ];
+            screenOverrides = [ ];
           };
           general = {
             avatarImage = "/home/dennis/.face";
@@ -225,34 +213,20 @@
             clockStyle = "custom";
             clockFormat = "hh\\nmm";
             passwordChars = false;
-            lockScreenMonitors = [
-
-            ];
+            lockScreenMonitors = [ ];
             lockScreenBlur = 0;
             lockScreenTint = 0;
             keybinds = {
-              keyUp = [
-                "Up"
-              ];
-              keyDown = [
-                "Down"
-              ];
-              keyLeft = [
-                "Left"
-              ];
-              keyRight = [
-                "Right"
-              ];
+              keyUp = [ "Up" ];
+              keyDown = [ "Down" ];
+              keyLeft = [ "Left" ];
+              keyRight = [ "Right" ];
               keyEnter = [
                 "Return"
                 "Enter"
               ];
-              keyEscape = [
-                "Esc"
-              ];
-              keyRemove = [
-                "Del"
-              ];
+              keyEscape = [ "Esc" ];
+              keyRemove = [ "Del" ];
             };
             reverseScroll = false;
             smoothScrollEnabled = true;
@@ -303,9 +277,7 @@
               }
             ];
           };
-          wallpaper = {
-            enabled = false;
-          };
+          wallpaper.enabled = false;
           appLauncher = {
             enableClipboardHistory = false;
             autoPasteClipboard = false;
@@ -316,9 +288,7 @@
             clipboardWatchTextCommand = "wl-paste --type text --watch cliphist store";
             clipboardWatchImageCommand = "wl-paste --type image --watch cliphist store";
             position = "center";
-            pinnedApps = [
-
-            ];
+            pinnedApps = [ ];
             sortByMostUsed = true;
             terminalCommand = "alacritty -e";
             customLaunchPrefixEnabled = false;
@@ -340,32 +310,16 @@
             diskPath = "/";
             shortcuts = {
               left = [
-                {
-                  id = "Network";
-                }
-                {
-                  id = "Bluetooth";
-                }
-                {
-                  id = "WallpaperSelector";
-                }
-                {
-                  id = "NoctaliaPerformance";
-                }
+                { id = "Network"; }
+                { id = "Bluetooth"; }
+                { id = "WallpaperSelector"; }
+                { id = "NoctaliaPerformance"; }
               ];
               right = [
-                {
-                  id = "Notifications";
-                }
-                {
-                  id = "PowerProfile";
-                }
-                {
-                  id = "KeepAwake";
-                }
-                {
-                  id = "NightLight";
-                }
+                { id = "Notifications"; }
+                { id = "PowerProfile"; }
+                { id = "KeepAwake"; }
+                { id = "NightLight"; }
               ];
             };
             cards = [
@@ -431,12 +385,8 @@
             floatingRatio = 1;
             size = 1;
             onlySameOutput = true;
-            monitors = [
-
-            ];
-            pinnedApps = [
-
-            ];
+            monitors = [ ];
+            pinnedApps = [ ];
             colorizeIcons = false;
             showLauncherIcon = false;
             launcherPosition = "end";
@@ -538,9 +488,7 @@
             enabled = true;
             enableMarkdown = false;
             density = "default";
-            monitors = [
-
-            ];
+            monitors = [ ];
             location = "top_right";
             overlayLayer = true;
             backgroundOpacity = 1;
@@ -578,9 +526,7 @@
               1
               2
             ];
-            monitors = [
-
-            ];
+            monitors = [ ];
           };
           audio = {
             volumeStep = 5;
@@ -588,9 +534,7 @@
             spectrumFrameRate = 30;
             visualizerType = "linear";
             spectrumMirrored = true;
-            mprisBlacklist = [
-
-            ];
+            mprisBlacklist = [ ];
             preferredPlayer = "";
             volumeFeedback = false;
             volumeFeedbackSoundFile = "";
@@ -599,9 +543,7 @@
             brightnessStep = 5;
             enforceMinimum = true;
             enableDdcSupport = false;
-            backlightDeviceMappings = [
-
-            ];
+            backlightDeviceMappings = [ ];
           };
           colorSchemes = {
             useWallpaperColors = false;
@@ -615,9 +557,7 @@
             syncGsettings = true;
           };
           templates = {
-            activeTemplates = [
-
-            ];
+            activeTemplates = [ ];
             enableUserTheming = false;
           };
           nightLight = {
@@ -667,9 +607,7 @@
             monitorWidgets = [
               {
                 name = "DP-3";
-                widgets = [
-
-                ];
+                widgets = [ ];
               }
             ];
           };

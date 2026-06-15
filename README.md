@@ -6,7 +6,7 @@ My current and everchanging dendritic Nix configuration flake.
 ## Helpful Commands
 ```sh
 # Rebuild shiro and switch to new generation
-sudo nixos-rebuild switch --flake .#shiro
+nix run .#shiro -- switch
 
 # Format all files
 treefmt
