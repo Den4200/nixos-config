@@ -14,6 +14,11 @@
       programs.vscode = {
         enable = true;
         package = pkgs.vscode.fhs;
+        argvSettings = {
+          enable-crash-reporter = true;
+          crash-reporter-id = "429f0eeb-00f4-4095-a3ae-a4883c6f5b27";
+          password-store = "gnome-libsecret";
+        };
         profiles.default = {
           extensions = with marketplace; [
             # Theme
