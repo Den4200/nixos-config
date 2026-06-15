@@ -131,6 +131,7 @@
         # Secret service (for VS Code, browsers, etc.)
         services.gnome.gnome-keyring.enable = true;
         security.pam.services.greetd.enableGnomeKeyring = true;
+        programs.seahorse.enable = true;
 
         # Login manager (greetd + regreet via niri)
         programs.regreet = {
