@@ -17,6 +17,10 @@
       url = "github:nix-community/home-manager";
     };
     import-tree.url = "github:vic/import-tree";
+    lanzaboote = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/lanzaboote";
+    };
     niri = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:sodiboo/niri-flake";
