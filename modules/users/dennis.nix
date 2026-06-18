@@ -44,6 +44,7 @@
 
         programs.git = {
           enable = true;
+          package = pkgs.gitFull;
           signing = {
             key = null;
             signByDefault = true;
@@ -58,6 +59,7 @@
             pull.ff = "only";
             push.autoSetupRemote = true;
             core.editor = lib.getExe pkgs.neovim;
+            credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
           };
         };
 
