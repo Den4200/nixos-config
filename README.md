@@ -10,6 +10,14 @@ My current and everchanging dendritic Nix configuration flake.
 # Rebuild shiro and switch to new generation
 nix run .#shiro -- switch
 
+# Update flake file
+nix run .#write-flake
+
 # Format all files
 nix fmt
+
+# Compare current system to pending upgrades
+nix run .#shiro -- build
+nix store diff-closures /run/current-system ./result
+rm result
 ```
