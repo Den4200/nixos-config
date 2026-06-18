@@ -61,6 +61,67 @@
           };
         };
 
+        programs.ssh = {
+          enable = true;
+          enableDefaultConfig = false;
+          settings = {
+            "Host panda" = {
+              HostName = "150.230.161.22";
+              User = "ubuntu";
+            };
+            "Host tigress" = {
+              HostName = "129.153.154.246";
+              User = "ubuntu";
+            };
+            "Host monkey" = {
+              HostName = "132.226.36.8";
+              User = "ubuntu";
+            };
+            "Host oki" = {
+              HostName = "192.168.1.50";
+              User = "admin";
+            };
+            "Host anvil" = {
+              HostName = "anvil.rcac.purdue.edu";
+              User = "x-den";
+            };
+            "Host cs-borg01" = {
+              HostName = "borg01.cs.purdue.edu";
+              User = "pham143";
+              ForwardX11 = true;
+              ForwardX11Trusted = true;
+            };
+            "Host cs-data" = {
+              HostName = "data.cs.purdue.edu";
+              User = "pham143";
+              ForwardX11 = true;
+              ForwardX11Trusted = true;
+            };
+            "Host cs-lore" = {
+              HostName = "lore.cs.purdue.edu";
+              User = "pham143";
+            };
+            "Host cs-xinu01" = {
+              HostName = "xinu01.cs.purdue.edu";
+              User = "pham143";
+              ForwardX11 = true;
+              ForwardX11Trusted = true;
+            };
+            "Host cs-xinu02" = {
+              HostName = "xinu02.cs.purdue.edu";
+              User = "pham143";
+              ForwardX11 = true;
+              ForwardX11Trusted = true;
+            };
+            "Host cs-xinu16" = {
+              HostName = "xinu16.cs.purdue.edu";
+              User = "pham143";
+              ForwardX11 = true;
+              ForwardX11Trusted = true;
+            };
+          };
+        };
+
         programs.rbw = {
           enable = true;
           settings = {
