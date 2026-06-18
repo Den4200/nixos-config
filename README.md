@@ -13,6 +13,12 @@ nix run .#shiro -- switch
 # Update flake file
 nix run .#write-flake
 
+# Pull flake updates
+nix flake update [flake]
+
+# Check flake evaluates successfully and is formatted correctly
+nix flake check
+
 # Format all files
 nix fmt
 
