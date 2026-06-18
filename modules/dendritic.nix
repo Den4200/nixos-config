@@ -12,8 +12,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Pinned nixpkgs for regreet 0.3.0 (0.4.0 crashes on 26.11 GTK4)
-    nixpkgs-regreet.url = "github:NixOS/nixpkgs/5f85796ab70f9a6ac935b366065d4565288947ac";
     elephant.url = "github:abenz1267/elephant";
     walker = {
       url = "github:abenz1267/walker";

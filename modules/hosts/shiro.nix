@@ -137,7 +137,6 @@
         programs.regreet = {
           enable = true;
           # Pin to regreet 0.3.0 (0.4.0 crashes due to GStreamer init failure)
-          package = (import inputs.nixpkgs-regreet { system = pkgs.stdenv.hostPlatform.system; }).regreet;
           settings = {
             background = {
               path = "${../../resources/wallpaper.jpeg}";
