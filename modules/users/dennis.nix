@@ -152,6 +152,7 @@
           fastfetch
           gcc
           gh
+	        git-crypt
           github-copilot-cli
           gnumake
           htop
