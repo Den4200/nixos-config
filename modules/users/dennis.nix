@@ -27,6 +27,47 @@
           enableCompletion = true;
           autosuggestion.enable = true;
           syntaxHighlighting.enable = true;
+          oh-my-zsh = {
+            enable = true;
+            theme = "robbyrussell";
+            plugins = [
+              "ansible"
+              "argocd"
+              "aws"
+              "azure"
+              "bun"
+              "docker"
+              "docker-compose"
+              "gh"
+              "git"
+              "git-lfs"
+              "gitignore"
+              "golang"
+              "helm"
+              "istioctl"
+              "kubectl"
+              "kubectx"
+              "mise"
+              "npm"
+              "pip"
+              "poetry"
+              "postgres"
+              "pre-commit"
+              "python"
+              "opentofu"
+              "redis-cli"
+              "rsync"
+              "rust"
+              "sigstore"
+              "ssh"
+              "sudo"
+              "systemd"
+              "terraform"
+              "uv"
+              "vscode"
+              "yarn"
+            ];
+          };
         };
 
         programs.mise = {
@@ -152,7 +193,8 @@
           fastfetch
           gcc
           gh
-	        git-crypt
+          ghostty
+          git-crypt
           github-copilot-cli
           gnumake
           htop
