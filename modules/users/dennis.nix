@@ -180,6 +180,18 @@
           };
         };
 
+        services.udiskie = {
+          enable = true;
+          settings = {
+            # workaround for
+            # https://github.com/nix-community/home-manager/issues/632
+            program_options = {
+              # replace with your favorite file manager
+              file_manager = lib.getExe pkgs.nautilus;
+            };
+          };
+        };
+
         home.pointerCursor = {
           name = "Adwaita";
           package = pkgs.adwaita-icon-theme;
@@ -248,6 +260,9 @@
 
         # Enable nix-ld for dynamically linked binaries (mise, etc.)
         programs.nix-ld.enable = true;
+
+        # Enable automounting of external drives and USBs
+        services.udisks2.enable = true;
 
         virtualisation.docker = {
           enable = true;
