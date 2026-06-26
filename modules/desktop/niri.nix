@@ -18,6 +18,18 @@ in
     { pkgs, lib, ... }:
     {
       programs.niri.settings = {
+        outputs."DP-4" = {
+          mode = {
+            width = 3840;
+            height = 2160;
+            refresh = 59.997;
+          };
+          scale = 1.5;
+          position = {
+            x = 4000;
+            y = 525;
+          };
+        };
         outputs."DP-3" = {
           mode = {
             width = 3840;
@@ -30,7 +42,7 @@ in
             y = 525;
           };
           focus-at-startup = true;
-          variable-refresh-rate = true;
+          variable-refresh-rate = "on-demand";
         };
         outputs."DP-2" = {
           mode = {

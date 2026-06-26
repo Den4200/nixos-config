@@ -156,6 +156,10 @@
                     skip-at-startup
                 }
 
+                output "DP-4" {
+                    off
+                }
+
                 output "DP-3" {
                     mode "3840x2160@239.990"
                     scale 1
