@@ -220,6 +220,7 @@
           jq
           kubectl
           kubelogin
+          kubeseal
           nixd
           nixfmt
           nixfmt-tree
