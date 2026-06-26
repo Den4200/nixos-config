@@ -22,7 +22,7 @@ in
           mode = {
             width = 3840;
             height = 2160;
-            refresh = 59.997;
+            refresh = 239.990;
           };
           scale = 1.5;
           position = {
@@ -30,6 +30,7 @@ in
             y = 525;
           };
           focus-at-startup = true;
+          variable-refresh-rate = true;
         };
         outputs."DP-2" = {
           mode = {

@@ -157,9 +157,10 @@
                 }
 
                 output "DP-3" {
-                    mode "3840x2160@59.997"
+                    mode "3840x2160@239.990"
                     scale 1
                     focus-at-startup
+                    variable-refresh-rate
                 }
 
                 output "DP-2" {
