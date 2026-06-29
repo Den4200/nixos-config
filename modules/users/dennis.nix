@@ -227,8 +227,6 @@
           opentofu
           pinentry-tty
           prek
-          python3
-          snyk
           talosctl
           yq
 
