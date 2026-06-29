@@ -71,7 +71,7 @@
               npm = "@ai-sdk/openai-compatible";
               name = "llama-server (local)";
               options = {
-                baseURL = "http://127.0.0.1:1234/v1";
+                baseURL = "http://127.0.0.1:9292/v1";
               };
               models = {
                 qwen3-coder-next-ud-q4_k_xl = {
