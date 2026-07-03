@@ -6,14 +6,21 @@
       programs.noctalia-shell.settings.bar.monitors = [ "DP-3" ];
     };
 
-  den.aspects.pong.provides.to-users.homeManager =
-    { ... }:
-    {
-      programs.noctalia-shell.settings.bar.monitors = [ "eDP-1" ];
-    };
+  den.aspects.pong = {
+    provides.to-users.homeManager =
+      { ... }:
+      {
+        programs.noctalia-shell.settings.bar.monitors = [ "eDP-1" ];
+      };
+    nixos =
+      { ... }:
+      {
+        services.upower.enable = true;
+      };
+  };
 
   den.aspects.dennis.homeManager =
-    { pkgs, ... }:
+    { ... }:
     {
       imports = [
         inputs.noctalia.homeModules.default
@@ -165,6 +172,11 @@
                   id = "Volume";
                   middleClickCommand = "pwvucontrol || pavucontrol";
                   textColor = "none";
+                }
+                {
+                  alwaysShowPercentage = true;
+                  id = "Battery";
+                  warningThreshold = 20;
                 }
                 {
                   colorizeDistroLogo = false;
