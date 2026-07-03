@@ -7,6 +7,11 @@
     users.dennis = { };
   };
 
+  den.hosts.x86_64-linux.pong = {
+    hostName = "pong";
+    users.dennis = { };
+  };
+
   # define an standalone home-manager for tux
   # den.homes.x86_64-linux.tux = { };
 

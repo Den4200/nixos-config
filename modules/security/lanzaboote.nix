@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  den.aspects.shiro.nixos =
+  den.default.nixos =
     { lib, pkgs, ... }:
     {
       imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];

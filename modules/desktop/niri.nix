@@ -64,6 +64,26 @@ in
       };
     };
 
+  den.aspects.pong.provides.to-users.homeManager =
+    { pkgs, lib, ... }:
+    {
+      programs.niri.settings = {
+        outputs."eDP-1" = {
+          mode = {
+            width = 3456;
+            height = 2160;
+            refresh = 60.000;
+          };
+          scale = 1.75;
+          focus-at-startup = true;
+        };
+
+        spawn-at-startup = [
+          { argv = [ "${lib.getExe pkgs.xwayland-satellite}" ]; }
+        ];
+      };
+    };
+
   # User-level niri settings (preferences)
   den.aspects.dennis.homeManager =
     { pkgs, lib, ... }:

@@ -1,6 +1,6 @@
 { ... }:
 {
-  den.aspects.dennis.homeManager =
+  den.aspects.dennis.provides.shiro.homeManager =
     {
       pkgs,
       lib,

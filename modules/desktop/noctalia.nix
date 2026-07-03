@@ -1,6 +1,17 @@
 { inputs, ... }:
 {
-  # Noctalia shell/bar config for dennis via official HM module
+  den.aspects.shiro.provides.to-users.homeManager =
+    { ... }:
+    {
+      programs.noctalia-shell.settings.bar.monitors = [ "DP-3" ];
+    };
+
+  den.aspects.pong.provides.to-users.homeManager =
+    { ... }:
+    {
+      programs.noctalia-shell.settings.bar.monitors = [ "eDP-1" ];
+    };
+
   den.aspects.dennis.homeManager =
     { pkgs, ... }:
     {
@@ -15,7 +26,6 @@
           bar = {
             barType = "simple";
             position = "top";
-            monitors = [ "DP-3" ];
             density = "default";
             showOutline = false;
             showCapsule = true;
@@ -604,12 +614,7 @@
             overviewEnabled = true;
             gridSnap = false;
             gridSnapScale = false;
-            monitorWidgets = [
-              {
-                name = "DP-3";
-                widgets = [ ];
-              }
-            ];
+            monitorWidgets = [ ];
           };
         };
       };
