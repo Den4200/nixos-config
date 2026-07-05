@@ -209,6 +209,7 @@
           ansible
           awscli2
           azure-cli
+          devenv
           fastfetch
           gcc
           gh
