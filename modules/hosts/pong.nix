@@ -202,10 +202,7 @@
         services.printing.enable = true;
         programs.firefox.enable = true;
 
-        environment.systemPackages = with pkgs; [
-          # Required for file chooser w/ xdg-desktop-portal-gnome that is installed with niri
-          nautilus
-        ];
+        environment.systemPackages = with pkgs; [ ];
       };
 
     provides.to-users.homeManager =

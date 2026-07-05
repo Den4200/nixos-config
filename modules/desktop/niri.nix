@@ -88,6 +88,11 @@ in
   den.aspects.dennis.homeManager =
     { pkgs, lib, ... }:
     {
+      home.packages = with pkgs; [
+        # Required for file chooser w/ xdg-desktop-portal-gnome that is installed with niri
+        nautilus
+      ];
+
       programs.niri.settings = {
         spawn-at-startup = [
           { argv = [ "${lib.getExe pkgs.noctalia-shell}" ]; }
