@@ -112,6 +112,8 @@ in
           focus-ring.width = 2;
         };
 
+        prefer-no-csd = true;
+
         # Keybindings
         binds =
           let
