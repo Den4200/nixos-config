@@ -209,6 +209,8 @@
           ansible
           awscli2
           azure-cli
+          claude-code
+          codex
           devenv
           fastfetch
           gcc

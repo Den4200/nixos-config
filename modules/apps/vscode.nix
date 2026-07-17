@@ -62,7 +62,9 @@
             ritwickdey.liveserver
 
             # AI
+            # anthropic.claude-code
             github.copilot-chat
+            openai.chatgpt
 
             # Docker / K8s
             kennylong.kubernetes-yaml-formatter
