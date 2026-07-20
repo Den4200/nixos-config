@@ -231,6 +231,7 @@
           pinentry-tty
           prek
           talosctl
+          winbox
           yq
 
           # apps
@@ -238,6 +239,10 @@
           obsidian
           vesktop
         ];
+
+        home.sessionVariables = {
+          DISPLAY = ":0";
+        };
       };
 
     provides.to-hosts.nixos =
