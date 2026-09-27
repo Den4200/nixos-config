@@ -238,6 +238,7 @@
           cider-2
           obsidian
           vesktop
+          vlc
         ];
 
         home.sessionVariables = {
